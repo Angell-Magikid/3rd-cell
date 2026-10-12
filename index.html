@@ -301,13 +301,33 @@
         </dl>
       </div>
     </div>
+
+    <div class="prove">
+      <p class="kicker"><span>05</span> Evaluation</p>
+      <h3 class="h2 h2-xs">What the hardware has to prove</h3>
+      <p class="lede">Six things decide whether candidate hardware can run this cycle unattended. They are listed in the order they would fail: a vision error puts every later position in the wrong place, while a dosing error only affects the plate in front of it.</p>
+
+      <ol class="prove-list">
+        <li class="reveal"><span class="prove-n">01</span><strong>Vision accuracy and automatic calibration</strong><p>How closely the camera resolves a tag, and whether the system can re-establish the coordinate system on its own after the bench is disturbed.</p></li>
+        <li class="reveal"><span class="prove-n">02</span><strong>Pipette quick change and repeatable repositioning</strong><p>Whether the second pipette lands where the first one did, run after run.</p></li>
+        <li class="reveal"><span class="prove-n">03</span><strong>Plunger stroke and force control</strong><p>Control of the first and second stop — what separates a clean dispense from a partial one.</p></li>
+        <li class="reveal"><span class="prove-n">04</span><strong>Tip loading and ejection success rate</strong><p>Measured over a run, not demonstrated once. A tip that fails to seat spoils everything downstream of it.</p></li>
+        <li class="reveal"><span class="prove-n">05</span><strong>Well-level motion accuracy and contamination control</strong><p>Positioning tight enough to address an individual well, and a path that never carries one liquid over another.</p></li>
+        <li class="reveal"><span class="prove-n">06</span><strong>Error detection, collision avoidance and protocol software</strong><p>What the system does when something is not where it should be — and whether the protocol can be versioned rather than hand-taught.</p></li>
+      </ol>
+
+      <figure class="band-figure prove-sheet reveal">
+        <img src="assets/workflow-overview.jpg" alt="Workstation overview diagram showing the ten elements, the nine-step seeding and dosing cycle, and six vendor evaluation criteria.">
+        <figcaption>The workstation as specified for vendor alignment: the ten elements, the nine-step cycle, and the evaluation criteria on the right.</figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
 <!-- ══════════ MARKET ══════════ -->
 <section class="band band--tight" id="market">
   <div class="wrap">
-    <p class="kicker kicker--light"><span>05</span> Why Now</p>
+    <p class="kicker kicker--light"><span>06</span> Why Now</p>
     <h2 class="h2 h2-sm">Demand is growing faster than<br>the people who can run the work</h2>
     <p class="lede">Public datasets point the same direction: approved therapies are selling more, more companies are developing them, and more programs are entering trials. Every one of those programs needs cell handling done by hand, repeatedly, by trained people.</p>
 
@@ -518,13 +538,19 @@
   <div class="modal-backdrop" data-close></div>
   <div class="modal-box" role="dialog" aria-modal="true" aria-label="3rd Cell overview video">
     <button class="modal-close" data-close aria-label="Close">&times;</button>
-    <div class="modal-screen" id="modalScreen">
+    <div class="modal-screen">
       <div class="modal-head">
-        <p class="modal-caption">The cycle — a seeding and dosing pass across a 24-well plate</p>
-        <p class="modal-sub">Nine steps, one plate. Registration, seeding, pipette changeover, dosing, close out.</p>
+        <p class="modal-caption">Collaborative arm running the cell handling sequence</p>
+        <p class="modal-sub">Bench-side pipetting on an existing lab bench — no dedicated enclosure, no rebuilt workspace.</p>
       </div>
-      <div class="modal-plate" id="modalPlate"></div>
-      <p class="modal-hint">Rendered live in SVG. To play a film here instead, drop a file at <code>assets/cycle.mp4</code> and we will wire the player in.</p>
+      <div class="video-frame">
+        <video id="cycleVideo" controls playsinline preload="metadata"
+               poster="assets/workstation-poster.jpg">
+          <source src="assets/workstation.mp4" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+      </div>
+      <p class="modal-hint">Footage from the 3rd Cell workstation program. The nine-step cycle that drives it is set out above.</p>
     </div>
   </div>
 </div>

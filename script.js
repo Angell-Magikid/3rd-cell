@@ -211,20 +211,43 @@
 
   $$('[data-plate]').forEach(animatePlate);
 
-  /* ───────── Scroll reveal ───────── */
+  /* ───────── Scroll reveal ─────────
+     Deliberately NOT IntersectionObserver-only: an observer fires for elements
+     that are entering the viewport, so a visitor who jumps straight to the
+     bottom (End key, scrollbar drag, deep link) skips past every section and
+     leaves them stuck at opacity 0. This pass reveals anything whose top edge
+     has reached the viewport — including anything already scrolled past. */
   const revealables = $$('.reveal');
-  if ('IntersectionObserver' in window && !reduceMotion) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((en, i) => {
-        if (!en.isIntersecting) return;
-        const delay = (Array.from(en.target.parentElement.children).indexOf(en.target) % 5) * 90;
-        setTimeout(() => en.target.classList.add('is-in'), delay);
-        io.unobserve(en.target);
-      });
-    }, { threshold: 0.16, rootMargin: '0px 0px -40px 0px' });
-    revealables.forEach(el => io.observe(el));
-  } else {
+
+  if (reduceMotion || !revealables.length) {
     revealables.forEach(el => el.classList.add('is-in'));
+  } else {
+    let ticking = false;
+
+    const revealPass = () => {
+      ticking = false;
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      revealables.forEach(el => {
+        if (el.classList.contains('is-in')) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < vh * 0.88) {                 // entering, or already above
+          const sibs = el.parentElement ? el.parentElement.children : [];
+          const delay = (Array.from(sibs).indexOf(el) % 5) * 90;
+          window.setTimeout(() => el.classList.add('is-in'), delay);
+        }
+      });
+    };
+
+    const requestPass = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(revealPass);
+    };
+
+    window.addEventListener('scroll', requestPass, { passive: true });
+    window.addEventListener('resize', requestPass);
+    window.addEventListener('load', requestPass);
+    requestPass();
   }
 
   /* ───────── Scroll spy for the nav ───────── */
@@ -266,32 +289,28 @@
 
   /* ───────── Video modal ───────── */
   const modal = $('#videoModal');
-
-  // Mount a fresh copy of the plate animation inside the modal on first open.
-  function mountModalPlate() {
-    const holder = $('#modalPlate');
-    const src = $('.plate');
-    if (!holder || !src || holder.firstElementChild) return;
-    const clone = src.cloneNode(true);
-    clone.removeAttribute('id');
-    clone.removeAttribute('aria-label');
-    clone.querySelectorAll('.is-empty').forEach(el => el.classList.remove('is-empty'));
-    clone.querySelectorAll('.plate__tip').forEach(el => el.classList.remove('is-visible'));
-    delete clone.dataset.plateReady;
-    holder.appendChild(clone);
-    animatePlate(clone);
-  }
+  const cycleVideo = $('#cycleVideo');
 
   const openModal = () => {
-    mountModalPlate();
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    if (cycleVideo) {
+      try { cycleVideo.currentTime = 0; } catch (e) { /* metadata not ready yet */ }
+      cycleVideo.muted = false;
+      const p = cycleVideo.play();
+      // If the browser blocks sound-on autoplay, fall back to a silent start
+      // rather than leaving the visitor staring at a paused poster frame.
+      if (p && typeof p.catch === 'function') {
+        p.catch(() => { cycleVideo.muted = true; cycleVideo.play().catch(() => {}); });
+      }
+    }
   };
   const closeModal = () => {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (cycleVideo) { cycleVideo.pause(); cycleVideo.muted = false; }
   };
   $('#watchVideo').addEventListener('click', openModal);
   $$('[data-close]', modal).forEach(el => el.addEventListener('click', closeModal));
