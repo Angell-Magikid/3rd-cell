@@ -330,6 +330,53 @@ button{font:inherit}
 .app-arrow svg{width:14px;height:14px}
 .app-card:hover .app-arrow{transform:translateX(4px)}
 
+/* ───────── Platform ───────── */
+.platform{
+  padding:clamp(46px,4.8vw,70px) 0 clamp(50px,5vw,76px);
+  background:linear-gradient(180deg,#EAF4FE 0%,#F4FAFF 42%,#FFFFFF 100%);
+}
+.plat-kicker{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+  color:var(--blue);margin-bottom:12px;
+}
+.platform .lede{max-width:64ch;margin-top:14px}
+.plat-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.6vw,22px);
+  margin-top:clamp(26px,3vw,40px);
+}
+.plat-card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+  padding:22px 20px 24px;box-shadow:var(--sh-sm);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s;
+}
+.plat-card:hover{transform:translateY(-5px);box-shadow:var(--sh-md);border-color:rgba(22,112,196,.28)}
+.plat-num{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--teal)}
+.plat-card h3{font-size:15px;font-weight:800;color:var(--ink);margin-top:10px;line-height:1.32;letter-spacing:-.01em}
+.plat-card p{font-size:12.8px;color:var(--muted);line-height:1.62;margin-top:9px}
+
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:clamp(22px,2.4vw,32px)}
+.chips span{
+  font-size:12px;font-weight:600;color:var(--deep);
+  background:rgba(255,255,255,.92);border:1px solid rgba(22,112,196,.28);
+  border-radius:999px;padding:7px 15px;transition:background .25s,color .25s;
+}
+.chips span:hover{background:var(--grad-brand);color:#fff;border-color:transparent}
+
+.plat-team{
+  margin-top:clamp(24px,2.6vw,36px);
+  padding:clamp(20px,2.2vw,28px) clamp(20px,2.6vw,34px);
+  border-radius:var(--r-md);background:var(--grad-brand);color:#fff;
+  box-shadow:0 14px 40px rgba(22,112,196,.24);
+}
+.plat-team h4{
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#A9DCF5;
+}
+.plat-team p{
+  margin-top:11px;font-size:clamp(12.5px,1.02vw,14.5px);line-height:1.72;
+  color:rgba(255,255,255,.92);max-width:96ch;
+}
+.plat-team strong{color:#fff;font-weight:700}
+
 /* ───────── Footer ───────── */
 .site-footer{position:relative;background:#062A63;color:#fff;overflow:hidden;isolation:isolate}
 .site-footer::before{
@@ -441,6 +488,7 @@ button{font:inherit}
   .nav-link{font-size:12.5px}
   .apps-grid{grid-template-columns:repeat(3,1fr)}
   .apps-grid .app-card:nth-child(4),.apps-grid .app-card:nth-child(5){grid-column:span 1}
+  .plat-grid{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1.4fr 1fr 1fr 1.5fr;row-gap:34px}
   .footer-sub{grid-column:span 1}
 }
@@ -508,6 +556,7 @@ button{font:inherit}
 
   .apps-grid{grid-template-columns:1fr 1fr}
   .apps-head{flex-direction:column;align-items:flex-start;gap:12px}
+  .plat-grid{grid-template-columns:1fr}
 
   .watch{right:auto;left:var(--gutter);bottom:16px}
   .watch-text{display:none}

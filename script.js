@@ -52,25 +52,25 @@
       theme: 'light',
       eyebrow: 'Regenerate<br>Activate<br>Live Brighter',
       lines: ['3rd Cell', 'Super Power', 'for a Healthier', 'Tomorrow'],
-      sub: "Engineering Life's Next Possibilities",
+      sub: 'Engineering the Future of Cell Manufacturing',
       cta: 'Explore Our Solutions',
       script: 'Healthy Cells<br><span>Brighter Lives</span>'
     },
     {
       theme: 'light',
       eyebrow: 'Precision<br>Automation<br>Consistency',
-      lines: ['Intelligent Cell', 'Manufacturing', 'Engineered', 'for Scale'],
-      sub: 'Multi-Robot Collaborative Workstations',
+      lines: ['Intelligent Cell', 'Manufacturing', 'Programmable', '&amp; Scalable'],
+      sub: 'AI-Native CDMO for Cell &amp; Gene Therapy',
       cta: 'Our Technology',
       script: 'Automated<br><span>Cell Production</span>'
     },
     {
       theme: 'dark',
-      eyebrow: 'Global Minds<br>One Mission<br>Healthier Tomorrow',
-      lines: ['Breakthroughs', 'Built', 'Together', 'Worldwide'],
-      sub: '3rd Cell International Conference',
-      cta: 'Join the Conference',
-      script: 'Shared Science<br><span>Global Impact</span>'
+      eyebrow: 'Robotics<br>Intelligence<br>Scale',
+      lines: ['One Platform', 'Every Cell Type', 'From iPSC', 'to CAR-T'],
+      sub: 'iPSC &middot; MSC &middot; CAR-T &middot; CAR-NK &middot; HSC',
+      cta: 'Explore the Platform',
+      script: 'Living Products<br><span>Industrial Precision</span>'
     }
   ];
 
@@ -98,7 +98,7 @@
     titleEl.innerHTML = c.lines
       .map((t, n) => `<span class="${n < 2 ? 't-dark' : 't-blue'}">${t}</span>`)
       .join('');
-    subEl.textContent = c.sub;
+    subEl.innerHTML = c.sub;
     ctaEl.childNodes[0].nodeValue = c.cta + ' ';
     scriptEl.innerHTML = c.script;
   }
