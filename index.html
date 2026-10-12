@@ -149,6 +149,177 @@
   </div>
 </section>
 
+<!-- ══════════ TRANSFER / PROBLEM ══════════ -->
+<section class="band band--ice" id="transfer">
+  <div class="wrap">
+    <p class="kicker"><span>01</span> The Problem</p>
+    <h2 class="h2 h2-sm">A protocol that works<br>is not yet a protocol<br>that travels</h2>
+    <p class="lede">A cell therapy process is developed in a research lab, then has to be received and re-run somewhere else — a manufacturing partner, a hospital production centre, a second site. Receiving it means re-teaching the handling, re-mapping it onto different equipment and labware, repeating experiments, retraining people and re-validating the result.</p>
+
+    <div class="duo">
+      <article class="duo-card reveal">
+        <h3>Process migration</h3>
+        <p>What changes when the vessels, the medium and the handling change. Re-developed, re-validated, and paid for again at every transfer.</p>
+      </article>
+      <article class="duo-card reveal">
+        <h3>Lab deployment</h3>
+        <p>What changes when the room, the equipment and the way people move through it change. A purchase budget cannot buy floor space.</p>
+      </article>
+    </div>
+
+    <figure class="band-figure reveal">
+      <img src="assets/transfer-path.jpg" alt="Three stages of process transfer: a mature protocol at the bench, the same protocol executed and recorded by a robot, and a receiving team reproducing it in a cleanroom.">
+      <figcaption>The path 3rd Cell is built to shorten: a mature bench protocol, executed and recorded as a robot process, reproduced by the receiving team.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ APPROACH ══════════ -->
+<section class="band" id="approach">
+  <div class="wrap">
+    <p class="kicker"><span>02</span> The Approach</p>
+    <h2 class="h2 h2-sm">Keep the protocol.<br>Keep the lab.</h2>
+    <p class="lede">Most cell automation asks a lab to change both things at once: adopt a new process format, and make room for a fixed workstation. Our entry point is to change neither. The mature culture conditions stay. The existing room, bench heights and equipment positions stay. What gets added is a robot that can reach them.</p>
+
+    <div class="quad">
+      <article class="quad-card reveal">
+        <span class="quad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v5l4 9a3 3 0 0 1-2.8 4H7.8A3 3 0 0 1 5 17l4-9V3Z"/><path d="M9 3h6M7.5 14h9"/></svg></span>
+        <h3>The labware stays</h3>
+        <p>Flasks, plates and media the lab already validated remain the ones in use, so culture conditions do not have to be re-developed.</p>
+      </article>
+      <article class="quad-card reveal">
+        <span class="quad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V9l7-5 7 5v11"/><path d="M10 20v-5h4v5"/></svg></span>
+        <h3>The room stays</h3>
+        <p>A mobile base moves along the lab's existing traffic routes instead of claiming a dedicated footprint, so a purchase does not depend on a renovation.</p>
+      </article>
+      <article class="quad-card reveal">
+        <span class="quad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8Z"/><path d="M9 8V5a3 3 0 0 1 6 0v3M3 12h18"/></svg></span>
+        <h3>The instruments stay</h3>
+        <p>Incubators, biosafety cabinets and microscopes are docked with and handed off to, rather than replaced by a sealed cartridge system.</p>
+      </article>
+      <article class="quad-card reveal">
+        <span class="quad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10m0 0 4-4m-4 4-4-4"/><path d="M4 15v3a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-3"/></svg></span>
+        <h3>The execution is recorded</h3>
+        <p>Each run produces a traceable record of what was done — which is what makes a process reproducible at the second site at all.</p>
+      </article>
+    </div>
+
+    <figure class="band-figure band-figure--wide reveal">
+      <img src="assets/lab-motion.jpg" alt="Two lab layouts compared: a fixed automation workstation occupying the centre of the room, and a mobile robot travelling the existing routes between equipment.">
+      <figcaption>Left, a fixed workstation added to the room. Right, the same room with a mobile robot using the routes that are already there.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ CYCLE ══════════ -->
+<section class="band band--ice" id="cycle">
+  <div class="wrap">
+    <p class="kicker"><span>03</span> The Workflow</p>
+    <h2 class="h2 h2-sm">Nine steps, one plate</h2>
+    <p class="lede">Registration first, then seeding, then dosing, then close out and start again. The pipette swap in the middle carries the most risk: that is where a tip is discarded, a second pipette is picked up, and the run has to stay sterile across the handover.</p>
+
+    <div class="spec-row">
+      <span><b>Arm</b> Dobot NOVA 2 · 6-axis collaborative</span>
+      <span><b>Cycle</b> 9 steps, seeding to dosing</span>
+      <span><b>Localization</b> Overhead camera + AprilTags</span>
+    </div>
+
+    <div class="cycle-grid">
+      <figure class="plate-figure reveal">
+        <svg class="plate" data-plate data-cols="6" viewBox="0 0 360 260" role="img" aria-label="A 24-well plate filling well by well in the serpentine order a pipette works">
+          <defs>
+            <linearGradient id="wellFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#4ADDDA"/>
+              <stop offset="1" stop-color="#1670C4"/>
+            </linearGradient>
+          </defs>
+          <rect class="plate__frame" x="12" y="14" width="336" height="232" rx="10"/>
+          <g class="plate__wells">
+            <circle class="plate__well" cx="50"  cy="52"  r="18"/><circle class="plate__fill" cx="50"  cy="52"  r="11.5"/>
+            <circle class="plate__well" cx="102" cy="52"  r="18"/><circle class="plate__fill" cx="102" cy="52"  r="11.5"/>
+            <circle class="plate__well" cx="154" cy="52"  r="18"/><circle class="plate__fill" cx="154" cy="52"  r="11.5"/>
+            <circle class="plate__well" cx="206" cy="52"  r="18"/><circle class="plate__fill" cx="206" cy="52"  r="11.5"/>
+            <circle class="plate__well" cx="258" cy="52"  r="18"/><circle class="plate__fill" cx="258" cy="52"  r="11.5"/>
+            <circle class="plate__well" cx="310" cy="52"  r="18"/><circle class="plate__fill" cx="310" cy="52"  r="11.5"/>
+            <circle class="plate__well" cx="50"  cy="104" r="18"/><circle class="plate__fill" cx="50"  cy="104" r="11.5"/>
+            <circle class="plate__well" cx="102" cy="104" r="18"/><circle class="plate__fill" cx="102" cy="104" r="11.5"/>
+            <circle class="plate__well" cx="154" cy="104" r="18"/><circle class="plate__fill" cx="154" cy="104" r="11.5"/>
+            <circle class="plate__well" cx="206" cy="104" r="18"/><circle class="plate__fill" cx="206" cy="104" r="11.5"/>
+            <circle class="plate__well" cx="258" cy="104" r="18"/><circle class="plate__fill" cx="258" cy="104" r="11.5"/>
+            <circle class="plate__well" cx="310" cy="104" r="18"/><circle class="plate__fill" cx="310" cy="104" r="11.5"/>
+            <circle class="plate__well" cx="50"  cy="156" r="18"/><circle class="plate__fill" cx="50"  cy="156" r="11.5"/>
+            <circle class="plate__well" cx="102" cy="156" r="18"/><circle class="plate__fill" cx="102" cy="156" r="11.5"/>
+            <circle class="plate__well" cx="154" cy="156" r="18"/><circle class="plate__fill" cx="154" cy="156" r="11.5"/>
+            <circle class="plate__well" cx="206" cy="156" r="18"/><circle class="plate__fill" cx="206" cy="156" r="11.5"/>
+            <circle class="plate__well" cx="258" cy="156" r="18"/><circle class="plate__fill" cx="258" cy="156" r="11.5"/>
+            <circle class="plate__well" cx="310" cy="156" r="18"/><circle class="plate__fill" cx="310" cy="156" r="11.5"/>
+            <circle class="plate__well" cx="50"  cy="208" r="18"/><circle class="plate__fill" cx="50"  cy="208" r="11.5"/>
+            <circle class="plate__well" cx="102" cy="208" r="18"/><circle class="plate__fill" cx="102" cy="208" r="11.5"/>
+            <circle class="plate__well" cx="154" cy="208" r="18"/><circle class="plate__fill" cx="154" cy="208" r="11.5"/>
+            <circle class="plate__well" cx="206" cy="208" r="18"/><circle class="plate__fill" cx="206" cy="208" r="11.5"/>
+            <circle class="plate__well" cx="258" cy="208" r="18"/><circle class="plate__fill" cx="258" cy="208" r="11.5"/>
+            <circle class="plate__well" cx="310" cy="208" r="18"/><circle class="plate__fill" cx="310" cy="208" r="11.5"/>
+          </g>
+          <g class="plate__tip">
+            <circle r="25" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.9"/>
+            <line x1="-32" y1="0" x2="-27" y2="0" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="27"  y1="0" x2="32"  y2="0" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="0" y1="-32" x2="0" y2="-27" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="0" y1="27"  x2="0" y2="32"  stroke="currentColor" stroke-width="1.4"/>
+          </g>
+        </svg>
+        <figcaption>A seeding pass across a 24-well plate, in dispense order. The reticle marks the well the arm is addressing.</figcaption>
+      </figure>
+
+      <ol class="steps" id="stepsList">
+        <li class="steps-group"><h4>Registration</h4></li>
+        <li class="step"><span class="step-n">01</span><div><strong>Vision mapping</strong><p>The overhead camera detects the AprilTags and establishes the workstation coordinate system — so the bench can be rebuilt without re-teaching every point.</p></div></li>
+        <li class="step"><span class="step-n">02</span><div><strong>Uncap plate</strong><p>The arm lifts the lid to the lid station, clear of the path the pipette will travel for the rest of the cycle.</p></div></li>
+        <li class="steps-group"><h4>Cell seeding</h4></li>
+        <li class="step"><span class="step-n">03</span><div><strong>Select large-volume pipette</strong><p>Seeding moves more liquid than dosing, which is why the cycle carries two pipettes rather than one.</p></div></li>
+        <li class="step"><span class="step-n">04</span><div><strong>Load tip</strong><p>The pipette presses down to snap on a tip. The seal depends on that press, so force and alignment must both be repeatable.</p></div></li>
+        <li class="step"><span class="step-n">05</span><div><strong>Aspirate cells and seed plate</strong><p>Cell suspension is drawn from the reservoir and dispensed into each well — the step where well-to-well consistency is judged.</p></div></li>
+        <li class="steps-group"><h4>Pipette changeover</h4></li>
+        <li class="step"><span class="step-n">06</span><div><strong>Eject tip, return pipette</strong><p>Nothing that touched the cell suspension continues into the dosing half of the cycle.</p></div></li>
+        <li class="step"><span class="step-n">07</span><div><strong>Switch to small-volume pipette</strong><p>Dosing accuracy depends on this swap putting the second pipette in the same place as the first, every time.</p></div></li>
+        <li class="steps-group"><h4>Drug dosing</h4></li>
+        <li class="step"><span class="step-n">08</span><div><strong>Aspirate reagent and dose plate</strong><p>Reagent is dispensed into each well according to the well map — the plan of which well receives which condition.</p></div></li>
+        <li class="steps-group"><h4>Close out</h4></li>
+        <li class="step"><span class="step-n">09</span><div><strong>Recap and transfer</strong><p>The lid goes back on, the plate moves to the standby slot, and the cycle restarts for the next plate.</p></div></li>
+      </ol>
+    </div>
+
+    <div class="machine-band reveal">
+      <img src="assets/machine.jpg" alt="A six-axis collaborative arm on a lifting column mounted to a mobile base, alongside a lab bench holding a culture flask.">
+      <div class="machine-copy">
+        <p class="kicker kicker--light"><span>04</span> The Machine</p>
+        <h3 class="h2 h2-xs">A mobile base, a lifting column, one arm</h3>
+        <dl class="machine-list">
+          <div><dt>Mobile base</dt><dd>Travels the lab's existing routes between equipment, so no single station has to hold everything.</dd></div>
+          <div><dt>Lifting column &amp; docking</dt><dd>Matches the working heights that are already there, instead of asking for benches to be rebuilt.</dd></div>
+          <div><dt>Interchangeable tools</dt><dd>A liquid-handling module, a labware gripper and a soft module for tissue. The tools change; the arm does not.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ MARKET ══════════ -->
+<section class="band band--tight" id="market">
+  <div class="wrap">
+    <p class="kicker kicker--light"><span>05</span> Why Now</p>
+    <h2 class="h2 h2-sm">Demand is growing faster than<br>the people who can run the work</h2>
+    <p class="lede">Public datasets point the same direction: approved therapies are selling more, more companies are developing them, and more programs are entering trials. Every one of those programs needs cell handling done by hand, repeatedly, by trained people.</p>
+
+    <div class="stats">
+      <div class="stat reveal"><span class="stat-num">30<em>%</em></span><p>Growth in combined 2025 sales of six approved CAR-T therapies, reaching <strong>$5.89&nbsp;billion</strong>.</p></div>
+      <div class="stat reveal"><span class="stat-num">912</span><p>Cell therapy developers counted worldwide, up from <strong>796</strong> a little over a year earlier.</p></div>
+      <div class="stat reveal"><span class="stat-num">940</span><p>Non-genetically-modified cell therapy programs in development, from preclinical to filing.</p></div>
+    </div>
+    <p class="stat-note">Figures are drawn from public filings and registries. Periods and sources available on request.</p>
+  </div>
+</section>
+
 <!-- ══════════ STORIES ══════════ -->
 <section class="stories" id="programs">
   <div class="wrap stories-grid">
@@ -347,10 +518,13 @@
   <div class="modal-backdrop" data-close></div>
   <div class="modal-box" role="dialog" aria-modal="true" aria-label="3rd Cell overview video">
     <button class="modal-close" data-close aria-label="Close">&times;</button>
-    <div class="modal-screen">
-      <div class="modal-pulse"></div>
-      <p class="modal-caption">3rd Cell — Automated Cell Manufacturing</p>
-      <p class="modal-hint">Video placeholder · drop your file at <code>assets/intro.mp4</code> to play it here.</p>
+    <div class="modal-screen" id="modalScreen">
+      <div class="modal-head">
+        <p class="modal-caption">The cycle — a seeding and dosing pass across a 24-well plate</p>
+        <p class="modal-sub">Nine steps, one plate. Registration, seeding, pipette changeover, dosing, close out.</p>
+      </div>
+      <div class="modal-plate" id="modalPlate"></div>
+      <p class="modal-hint">Rendered live in SVG. To play a film here instead, drop a file at <code>assets/cycle.mp4</code> and we will wire the player in.</p>
     </div>
   </div>
 </div>

@@ -140,6 +140,77 @@
   go(0);
   restart();
 
+  /* ───────── 24-well plate cycle (live SVG) ───────── */
+  const canObserve = 'IntersectionObserver' in window;
+
+  function animatePlate(plate) {
+    if (!plate || plate.dataset.plateReady === '1') return;
+    const fills = Array.from(plate.querySelectorAll('.plate__fill'));
+    if (!fills.length) return;
+    plate.dataset.plateReady = '1';
+
+    const cols = parseInt(plate.getAttribute('data-cols'), 10) || 6;
+    const tip = plate.querySelector('.plate__tip');
+
+    if (reduceMotion) return;              // leave the completed plate in place
+
+    const FILL_MS = 108, HOLD_MS = 1500, DRAIN_MS = 38, REST_MS = 820;
+
+    // serpentine order, the way a pipette actually works across a plate
+    const order = fills.slice().sort((a, b) => {
+      const ai = fills.indexOf(a), bi = fills.indexOf(b);
+      const ar = Math.floor(ai / cols), br = Math.floor(bi / cols);
+      if (ar !== br) return ar - br;
+      return ar % 2 === 0 ? (ai % cols) - (bi % cols) : (bi % cols) - (ai % cols);
+    });
+
+    order.forEach(el => el.classList.add('is-empty'));
+
+    let phase = 'fill', idx = 0, timer = null, running = false;
+    let onScreen = !canObserve;
+
+    function moveTip(el) {
+      if (!tip) return;
+      tip.classList.add('is-visible');
+      tip.setAttribute('transform',
+        'translate(' + el.getAttribute('cx') + ' ' + el.getAttribute('cy') + ')');
+    }
+    const at = ms => { timer = window.setTimeout(tick, ms); };
+
+    function tick() {
+      timer = null;
+      if (phase === 'fill') {
+        order[idx].classList.remove('is-empty');
+        moveTip(order[idx]);
+        idx += 1;
+        if (idx < order.length) at(FILL_MS);
+        else {
+          if (tip) tip.classList.remove('is-visible');
+          phase = 'drain'; idx = 0; at(HOLD_MS);
+        }
+      } else {
+        order[idx].classList.add('is-empty');
+        idx += 1;
+        if (idx < order.length) at(DRAIN_MS);
+        else { phase = 'fill'; idx = 0; at(REST_MS); }
+      }
+    }
+    function start() { if (running) return; running = true; at(260); }
+    function stop()  { running = false; if (timer) { clearTimeout(timer); timer = null; } }
+    function sync()  { (onScreen && !document.hidden) ? start() : stop(); }
+
+    if (canObserve) {
+      new IntersectionObserver(entries => {
+        entries.forEach(e => { onScreen = e.isIntersecting; });
+        sync();
+      }, { threshold: 0.2 }).observe(plate);
+    }
+    document.addEventListener('visibilitychange', sync);
+    sync();
+  }
+
+  $$('[data-plate]').forEach(animatePlate);
+
   /* ───────── Scroll reveal ───────── */
   const revealables = $$('.reveal');
   if ('IntersectionObserver' in window && !reduceMotion) {
@@ -195,7 +266,24 @@
 
   /* ───────── Video modal ───────── */
   const modal = $('#videoModal');
+
+  // Mount a fresh copy of the plate animation inside the modal on first open.
+  function mountModalPlate() {
+    const holder = $('#modalPlate');
+    const src = $('.plate');
+    if (!holder || !src || holder.firstElementChild) return;
+    const clone = src.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.removeAttribute('aria-label');
+    clone.querySelectorAll('.is-empty').forEach(el => el.classList.remove('is-empty'));
+    clone.querySelectorAll('.plate__tip').forEach(el => el.classList.remove('is-visible'));
+    delete clone.dataset.plateReady;
+    holder.appendChild(clone);
+    animatePlate(clone);
+  }
+
   const openModal = () => {
+    mountModalPlate();
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
