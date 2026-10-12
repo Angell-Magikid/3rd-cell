@@ -14,16 +14,18 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  /* ───────── Search bar ───────── */
+  /* ───────── Search bar (home page only) ───────── */
   const searchToggle = $('#searchToggle');
   const searchClose  = $('#searchClose');
   const searchInput  = $('#searchBar input');
-  searchToggle.addEventListener('click', () => {
-    const open = header.classList.toggle('search-open');
-    if (open) setTimeout(() => searchInput.focus(), 240);
-  });
-  searchClose.addEventListener('click', () => header.classList.remove('search-open'));
-  $('#searchBar').addEventListener('submit', e => e.preventDefault());
+  if (searchToggle && searchClose && searchInput) {
+    searchToggle.addEventListener('click', () => {
+      const open = header.classList.toggle('search-open');
+      if (open) setTimeout(() => searchInput.focus(), 240);
+    });
+    searchClose.addEventListener('click', () => header.classList.remove('search-open'));
+    $('#searchBar').addEventListener('submit', e => e.preventDefault());
+  }
 
   /* ───────── Mobile navigation ───────── */
   const nav = $('#primaryNav');
@@ -37,110 +39,114 @@
     burger.setAttribute('aria-expanded', 'false');
   }));
 
-  /* ───────── Hero carousel ───────── */
-  const hero     = $('#hero');
-  const slides   = $$('.hero-slide', hero);
-  const dotsWrap = $('#heroDots');
-  const titleEl  = $('.hero-title', hero);
-  const eyebrowEl= $('.hero-eyebrow', hero);
-  const subEl    = $('.hero-sub', hero);
-  const ctaEl    = $('.hero-copy .btn', hero);
-  const scriptEl = $('.hero-script', hero);
+  /* ───────── Hero carousel (home page only) ───────── */
+  const hero = $('#hero');
+  if (hero) {
+    const slides   = $$('.hero-slide', hero);
+    const dotsWrap = $('#heroDots');
+    const titleEl  = $('.hero-title', hero);
+    const eyebrowEl= $('.hero-eyebrow', hero);
+    const subEl    = $('.hero-sub', hero);
+    const ctaEl    = $('.hero-copy .btn', hero);
+    const scriptEl = $('.hero-script', hero);
 
-  const COPY = [
-    {
-      theme: 'light',
-      eyebrow: 'Regenerate<br>Activate<br>Live Brighter',
-      lines: ['3rd Cell', 'Super Power', 'for a Healthier', 'Tomorrow'],
-      sub: 'Engineering the Future of Cell Manufacturing',
-      cta: 'Explore Our Solutions',
-      script: 'Healthy Cells<br><span>Brighter Lives</span>'
-    },
-    {
-      theme: 'light',
-      eyebrow: 'Precision<br>Automation<br>Consistency',
-      lines: ['Intelligent Cell', 'Manufacturing', 'Programmable', '&amp; Scalable'],
-      sub: 'AI-Native CDMO for Cell &amp; Gene Therapy',
-      cta: 'Our Technology',
-      script: 'Automated<br><span>Cell Production</span>'
-    },
-    {
-      theme: 'dark',
-      eyebrow: 'Robotics<br>Intelligence<br>Scale',
-      lines: ['One Platform', 'Every Cell Type', 'From iPSC', 'to CAR-T'],
-      sub: 'iPSC &middot; MSC &middot; CAR-T &middot; CAR-NK &middot; HSC',
-      cta: 'Explore the Platform',
-      script: 'Living Products<br><span>Industrial Precision</span>'
+    const COPY = [
+      {
+        theme: 'light',
+        eyebrow: 'Regenerate<br>Activate<br>Live Brighter',
+        lines: ['3rd Cell', 'Super Power', 'for a Healthier', 'Tomorrow'],
+        sub: 'Engineering the Future of Cell Manufacturing',
+        cta: 'Explore Our Solutions',
+        script: 'Healthy Cells<br><span>Brighter Lives</span>'
+      },
+      {
+        theme: 'light',
+        eyebrow: 'Precision<br>Automation<br>Consistency',
+        lines: ['Intelligent Cell', 'Manufacturing', 'Programmable', '&amp; Scalable'],
+        sub: 'AI-Native CDMO for Cell &amp; Gene Therapy',
+        cta: 'Our Technology',
+        script: 'Automated<br><span>Cell Production</span>'
+      },
+      {
+        theme: 'dark',
+        eyebrow: 'Robotics<br>Intelligence<br>Scale',
+        lines: ['One Platform', 'Every Cell Type', 'From iPSC', 'to CAR-T'],
+        sub: 'iPSC &middot; MSC &middot; CAR-T &middot; CAR-NK &middot; HSC',
+        cta: 'Explore the Platform',
+        script: 'Living Products<br><span>Industrial Precision</span>'
+      }
+    ];
+
+    let current = 0;
+    let timer = null;
+
+    // build dots
+    slides.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-label', 'Slide ' + (i + 1));
+      b.addEventListener('click', () => go(i, true));
+      dotsWrap.appendChild(b);
+    });
+    const dots = $$('button', dotsWrap);
+
+    function render(i) {
+      const c = COPY[i] || COPY[0];
+      hero.dataset.theme = c.theme;
+      eyebrowEl.innerHTML = c.eyebrow
+        .split('<br>')
+        .map(t => `<span>${t}</span>`)
+        .join('');
+      titleEl.innerHTML = c.lines
+        .map((t, n) => `<span class="${n < 2 ? 't-dark' : 't-blue'}">${t}</span>`)
+        .join('');
+      subEl.innerHTML = c.sub;
+      ctaEl.childNodes[0].nodeValue = c.cta + ' ';
+      scriptEl.innerHTML = c.script;
     }
-  ];
 
-  let current = 0;
-  let timer = null;
+    function go(i, userInitiated) {
+      current = (i + slides.length) % slides.length;
+      slides.forEach((s, n) => s.classList.toggle('is-active', n === current));
+      dots.forEach((d, n) => d.setAttribute('aria-selected', String(n === current)));
+      render(current);
+      if (userInitiated) restart();
+    }
 
-  // build dots
-  slides.forEach((_, i) => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.setAttribute('role', 'tab');
-    b.setAttribute('aria-label', 'Slide ' + (i + 1));
-    b.addEventListener('click', () => go(i, true));
-    dotsWrap.appendChild(b);
-  });
-  const dots = $$('button', dotsWrap);
+    function restart() {
+      if (reduceMotion) return;
+      clearInterval(timer);
+      timer = setInterval(() => go(current + 1), 7000);
+    }
 
-  function render(i) {
-    const c = COPY[i] || COPY[0];
-    hero.dataset.theme = c.theme;
-    eyebrowEl.innerHTML = c.eyebrow
-      .split('<br>')
-      .map(t => `<span>${t}</span>`)
-      .join('');
-    titleEl.innerHTML = c.lines
-      .map((t, n) => `<span class="${n < 2 ? 't-dark' : 't-blue'}">${t}</span>`)
-      .join('');
-    subEl.innerHTML = c.sub;
-    ctaEl.childNodes[0].nodeValue = c.cta + ' ';
-    scriptEl.innerHTML = c.script;
+    $('#heroPrev').addEventListener('click', () => go(current - 1, true));
+    $('#heroNext').addEventListener('click', () => go(current + 1, true));
+    hero.addEventListener('mouseenter', () => clearInterval(timer));
+    hero.addEventListener('mouseleave', restart);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft')  go(current - 1, true);
+      if (e.key === 'ArrowRight') go(current + 1, true);
+    });
+
+    // swipe
+    let touchX = null;
+    hero.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+    hero.addEventListener('touchend', e => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 55) go(current + (dx < 0 ? 1 : -1), true);
+      touchX = null;
+    });
+
+    render(0);
+    go(0);
+    restart();
+
+  
   }
 
-  function go(i, userInitiated) {
-    current = (i + slides.length) % slides.length;
-    slides.forEach((s, n) => s.classList.toggle('is-active', n === current));
-    dots.forEach((d, n) => d.setAttribute('aria-selected', String(n === current)));
-    render(current);
-    if (userInitiated) restart();
-  }
-
-  function restart() {
-    if (reduceMotion) return;
-    clearInterval(timer);
-    timer = setInterval(() => go(current + 1), 7000);
-  }
-
-  $('#heroPrev').addEventListener('click', () => go(current - 1, true));
-  $('#heroNext').addEventListener('click', () => go(current + 1, true));
-  hero.addEventListener('mouseenter', () => clearInterval(timer));
-  hero.addEventListener('mouseleave', restart);
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft')  go(current - 1, true);
-    if (e.key === 'ArrowRight') go(current + 1, true);
-  });
-
-  // swipe
-  let touchX = null;
-  hero.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
-  hero.addEventListener('touchend', e => {
-    if (touchX === null) return;
-    const dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 55) go(current + (dx < 0 ? 1 : -1), true);
-    touchX = null;
-  });
-
-  render(0);
-  go(0);
-  restart();
-
-  /* ───────── 24-well plate cycle (live SVG) ───────── */
+/* ───────── 24-well plate cycle (live SVG) ───────── */
   const canObserve = 'IntersectionObserver' in window;
 
   function animatePlate(plate) {
@@ -287,34 +293,36 @@
     form.reset();
   });
 
-  /* ───────── Video modal ───────── */
-  const modal = $('#videoModal');
-  const cycleVideo = $('#cycleVideo');
+    /* ───────── Video modal ───────── */
+  if (modal) {
+    const modal = $('#videoModal');
+    const cycleVideo = $('#cycleVideo');
 
-  const openModal = () => {
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    if (cycleVideo) {
-      try { cycleVideo.currentTime = 0; } catch (e) { /* metadata not ready yet */ }
-      cycleVideo.muted = false;
-      const p = cycleVideo.play();
-      // If the browser blocks sound-on autoplay, fall back to a silent start
-      // rather than leaving the visitor staring at a paused poster frame.
-      if (p && typeof p.catch === 'function') {
-        p.catch(() => { cycleVideo.muted = true; cycleVideo.play().catch(() => {}); });
+    const openModal = () => {
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (cycleVideo) {
+        try { cycleVideo.currentTime = 0; } catch (e) { /* metadata not ready yet */ }
+        cycleVideo.muted = false;
+        const p = cycleVideo.play();
+        // If the browser blocks sound-on autoplay, fall back to a silent start
+        // rather than leaving the visitor staring at a paused poster frame.
+        if (p && typeof p.catch === 'function') {
+          p.catch(() => { cycleVideo.muted = true; cycleVideo.play().catch(() => {}); });
+        }
       }
-    }
-  };
-  const closeModal = () => {
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    if (cycleVideo) { cycleVideo.pause(); cycleVideo.muted = false; }
-  };
-  $('#watchVideo').addEventListener('click', openModal);
-  $$('[data-close]', modal).forEach(el => el.addEventListener('click', closeModal));
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
-  });
+    };
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (cycleVideo) { cycleVideo.pause(); cycleVideo.muted = false; }
+    };
+    $('#watchVideo').addEventListener('click', openModal);
+    $$('[data-close]', modal).forEach(el => el.addEventListener('click', closeModal));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+  }
 })();
